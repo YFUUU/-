@@ -399,3 +399,19 @@ ceshi <- new_data1
         table(ceshi$类型, predicted, dnn = c("真实值", "预测值"))  #查看预测的和世纪情况是否相符
         
            #可以看到只有一个公司预测错了
+
+########################## BP神经网络实证分析 
+library(neuralnet)
+    
+#读入数据赋予lyf        
+        
+library(openxlsx)
+lyf <- read.xlsx("D:\\罗一夫毕业设计\\数据\\R主成分.xlsx",
+                             rowNames = TRUE,colNames = TRUE, na.strings = "NULL", rows = 1:59, cols = 1:8)       
+show(lyf)        
+
+        
+        
+
+
+
