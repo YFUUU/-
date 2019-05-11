@@ -1,1 +1,401 @@
-是
+newiris <- iris;
+newiris$Species <- NULL;  #对训练数据去掉分类标记
+(fc <- kmeans(newiris, 4))  #分类模型训练
+fitted(fc);  #查看具体分类情况
+table(iris$Species, fc$cluster);  #查看分类概括
+
+#聚类结果可视化 
+plot(newiris[c("Sepal.Length", "Sepal.Width")], col = fc$cluster, pch = as.integer(iris$Species));  #不同的颜色代表不同的聚类结果，不同的形状代表训练数据集的原始分类情况。
+points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col = 1:3, pch = 8, cex=2);
+
+
+fc <- kmeans(ceshi[,2:5], 5)
+
+plot(ceshi[c("流动比率", "速动比率")],
+     col = fc$cluster+77, pch = as.integer(ceshi$股票代码))
+
+## plot(ceshi[c("流动比率", "速动比率")],
+##     col = fc$cluster, pch = 19)   */
+
+points(fc$centers[,c("流动比率", "速动比率")],
+       col = 2:5, pch = 5, cex=1)
+head(ceshi)
+
+
+(fc <- kmeans(ceshi, 4))  #分类模型训练
+fitted(fc)      #查看具体分类情况
+
+km <- kmeans(iris[,1:4], 4)
+#对结果的可视化
+plot(ceshi[c("流动比率", "速动比率")], 
+     col = fc$cluster, pch = as.integer(ceshi$权益乘数))
+
+plot(ceshi[c("流动比率", "速动比率")], 
+     col = fc$cluster, pch = 8)
+
+
+points(km$centers[,c("Sepal.Length", "Sepal.Width")], 
+       col = 1:3, pch = 8, cex=2)
+
+###ceshi数据的聚类
+str(ceshi) 
+
+ceshi1<- ceshi[,-1]
+
+b<-scale(ceshi1)  
+
+set.seed(123)  
+
+fc <- kmeans(b,3)
+
+library(ggplot2)
+library(factoextra)
+
+fviz_cluster(fc,data=ceshi1)
+###。。。。。。。。。
+
+require(MASS)
+require(ggplot2)
+set.seed(1234)
+set1 <- mvrnorm(n = 300, mu = c(-4, 10), Sigma = matrix(c(1.5, 1, 1, 1.5), 2))
+set2 <- mvrnorm(n = 300, mu = c(5, 7), Sigma = matrix(c(1, 2, 2, 6), 2))
+set3 <- mvrnorm(n = 300, mu = c(-1, 1), Sigma = matrix(c(4, 0, 0, 4), 2))
+set4 <- mvrnorm(n = 300, mu = c(10, -10), Sigma = matrix(c(4, 0, 0, 4), 2))
+set5 <- mvrnorm(n = 300, mu = c(3, -3), Sigma = matrix(c(4, 0, 0, 4), 2))
+DF <- data.frame(rbind(set1, set2, set3, set4, set5), cluster=as.factor(rep(1:5, each = 300)))
+
+ggplot(DF, aes(x=X1, y=X2, color=cluster)) + geom_point()
+
+
+####相关性检验#######
+hua <- USPersonalExpenditure
+huac <- cor(new_data)
+rownames(hua)<-NULL
+as.matrix(hua)
+as.data.frame(hua)
+chart.Correlation(huac,histogram = TRUE,pch=19)
+corrplot(huac, type="upper", order="hclust", tl.col="black", tl.srt=45)
+
+
+
+cor(ceshi1)
+xg <- cor(ceshi1)
+
+library(PerformanceAnalytics)
+library(corrplot)
+
+chart.Correlation(xg,histogram = TRUE,pch=19)
+corrplot(xg, type="upper", order="hclust", tl.col="black", tl.srt=45)
+
+
+install.packages("Hmisc")
+install.packages("VIM")
+install.packages("mice")
+install.packages("Hmisc")
+install.packages("corrplot")
+install.packages("sqldf")
+install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics)
+library(corrplot)
+library(mice)
+library(Hmisc)
+library()
+library()
+library()
+
+library(Hmisc)
+
+###主成分分析
+
+install.packages(c("FactoMineR", "factoextra"))  #安装要用的包，第一个用于分析，第二个用于可视化
+install.packages("psych")
+library("FactoMineR")
+library(ggplot2)
+library("factoextra")                              #加载要用的包
+library(mice)
+library(VIM)
+########################################################################################################################
+
+
+####公司数据汇总填补空缺值处理
+library(openxlsx)
+norcorporations <- read.xlsx("D:\\罗一夫毕业设计\\数据\\总样本.xlsx",
+              rowNames = TRUE,colNames = TRUE, na.strings = "NULL", rows = 1:60, cols = 1:20)
+summary(norcorporations)
+
+
+library(VIM)
+aggr_plot <- aggr(norcorporations, prop=TRUE ,col = c('ivory', 'red'), numbers=TRUE, sortVars=TRUE, 
+                  labels=names(norcorporations), cex.axis=0.6, gap=1, 
+                  ylab=c("各个财务指标缺失比率", "缺失指标的样本比率"))     #prop 是表示显示比例还是个数,sortVars表示是否按之前默认列排序显示
+
+
+
+#####可见营运资本周转率缺失的数据占整个数据集的35%左右，1，2，3，5，6，9同时缺失的占数据集的3.3％
+##完全没有缺失数据的占46.7%
+matrixplot(norcorporations,ylab=c("整个样本总体缺失情况"),cex.axis=0.60)  # 浅色表示值小，深色表示值大；默认缺失值为红色。
+
+?matrixplot
+
+#m为复制包含缺失值的数据源并插补形成完整数据的个数，默认值5，由于插补有随机的成分，因此每个数据集略有不同；插补方法默认为PMM预测均值法。
+#第一个参数是数据集 #10重插补，即生成10个无缺失数据集
+#meth为填补方法,pmm:预测均值法  ,maxit 为计算的迭代次数，次数越多耗时越长，结果越精准
+#用complete()查看 插补形成的10组完整数据集tempData中任一插补的完整数据集，complete(tempData,action=i),i取1...m中任一数
+??mice()
+
+# set.seed()用于设定随机数种子，一个特定的种子可以产生一个特定的伪随机序列，这个函数的主要目的，是让你的模拟能够可重复出现，因为很多时候我们需要取随机数，但这段代码再跑一次的时候，结果就不一样了，如果需要重复出现同样的模拟结果的话，就可以用set.seed()。在调试程序或者做展示的时候，结果的可重复性是很重要的，所以随机数种子也就很有必要。 
+#也可以简单地理解为括号里的数只是一个编号而已，例如set.seed(100)不应将括号里的数字理解成“一百”，
+#而是应该理解成“编号为一零零的随机数发生”，下一次再模拟可以采用二零零（200）或者一一一（111）等不同的编号即可，编号设定基本可以随意。
+
+#mice() 函数首先从一个包含缺失数据的数据框开始，然后返回一个包含多个完整数据集的对象。
+#每个完整数据集都是通过对原始数据框中的缺失数据进行插而生成的。
+
+#with() 函数可依次对每个完整数据集应用统计模型
+
+#pool() 函数将这些单独的分析结果整合为一组结果。
+#最终模型的标准误和p值都将准确地反映出由于缺失值和多重插补而产生的不确定性。
+
+tempData <- mice(norcorporations,m=1,maxit=30,meth='pmm') 
+summary(tempData)
+??mice
+
+
+# 示例说明code 
+library(mice)
+imp<-mice(mydata,m)  
+fit<-with(imp,analysis)  
+pooled<-pool(fit)  
+summary(pooled)
+# mydata是一个饮食缺失值的矩阵或数据框； 
+# imp是一个包含m个插补数据集的列表对象，同时还含有完成插补过程的信息，默认的m=5 
+# analysis是一个表达式对象，用来设定应用于m个插补的统计分析方法。方法包括做线回归模型的lm()函数、做广义线性模型的glm()函数、做广义可加模型的gam()、及做负二项模型的nbrm()函数。
+# fit是一个包含m个单独统计分析结果的列表对象； 
+# pooled是一个包含这m个统计分析平均结果的列表对象。
+
+#大致是用mice函数生成了10个插补后的完整数据集，用with函数使用回归模型对这10个样本逐一检验是否合理， 
+#用pool函数合并这用with函数检验出来的总的结果，用来评价某些列对于指定列
+
+
+
+
+
+#而回归模型是将需要插补变量作为因变量，其他相关变量作为自变量，通过建立回归模型预测出因变量的值对缺失变量进行插补。
+#找到未缺失任何值的财务指标列将其全部作为回归分析的自变量，有缺失值的列作为因变量
+linear_model <- lm(资本积累率~流动比率+速动比率+长期资本负债率+经营杠杆+资产报酬率+总资产净利润率+息税前营业利润率,data = norcorporations)
+summary(linear_model)
+#可见 资本积累率 = 189.87+135.33*流动比率-78.55*速动比率-214.10*长期资本负债率........-223.96*息税前营业利润率
+# # 利用norcorpornations中     右边    为自变量，左边为因变量构建线性回归模型lm
+
+#lm用于拟合线性模型。它可以用来进行回归分析
+plot(linear_model)  #可以用来提出异常点
+
+#residuals 残差 ，
+#这里说一下含义：
+#1、在计算结果的第一部分（call）列出了相应的回归模型公式；
+#2、第二部分（Residuals）列出了残差的最小值点、1/4分位点、3/4分位点、最大值点；
+#3、第三方部分（Coefficients）Estimate表示回归方程参数的估计，std.Error表示回归参数的标准差，t value 为t值，Pr（>|t|）表示p值
+#说明一下：***表示极为显著，**表示高度显著，*表示显著，.表示不太显著，没有记号表示不显著
+#4、第四部分（Residual standard error）表示残差的标准差，（F-statistic）表示F的统计量
+
+#构建一个回归模型后，先看F统计量的p值，这是对整个模型的假设检验，原假设是各系数都为0，
+#如果连这个p值都不显著，无法证明至少有一个自变量对因变量有显著性影响，这个模型便不成立，也就是越趋紧0效果越差
+#然后看Adjusted R2，每调整一次模型，应该力使它变大；Adjusted R2越大说明模型中相关的自变量对因变量可解释的变异比例越大，
+#模型的预测性就越好。
+
+
+
+fit_new <- with(tempData,linear_model )  
+
+
+summary(fit_new)
+
+pooled <- pool(fit_new) 
+?pool
+   
+#关于p值 ：p越大越不能认为样本中变量的关联是总体中变量关联的可靠指标/。p值是将观测结果认为有效的犯错的概率，
+#如p=0.05 说明样本中变量关联有5%的可能由于偶然性造成的，在许多领域，0.05是通常被认为可接受的边界水平。
+
+#现在，我们可以使用complete()函数返回完整的数据集
+#缺失的值被10个数据集的某个数据集做了替换。
+#如果希望使用另一个数据集，只需更改complete()函数的第二个参数。
+
+
+new_data <- complete(tempData,action=1)
+
+new_data <- new_data[,-7]
+
+library(lattice)
+xyplot(tempData,营运资本周转率~资本积累率+
+         存货周转天数+净资产收益率+管理费用增长率,
+          pch=18,cex=1)
+##我们希望看到的是洋红点呈现出的形状（插补值）跟蓝色点（观测值）呈现出的形状是匹配的。
+##从图中可以看到，插补的值的确是“近似于实际值”。
+
+modelFit1 <- with(tempData,lm(营运资本周转率~资本积累率+销售费用增长率+营业收入增长率+
+                                       存货周转天数+净资产收益率+管理费用增长率))
+mean(new_data$资本积累率)
+summary(pool(modelFit1))
+
+
+
+##再检查一下缺失数据的分布
+matrixplot(new_data,ylab=c("整个样本总体缺失情况"),cex.axis=0.60) 
+#####
+
+#发现始终有7处数据无法填补，查看数据集发现这5行都存在异常情况，如资本积累率超过了4000，营业收入增长率超过了10000
+#对于这5列极度异常的数据手动删除4,10,13,14,16行
+new_data <- new_data[,-3]
+new_data <- new_data[-9,]
+
+
+#####################主成分分析##############################################
+
+install.packages(c("FactoMineR", "factoextra"))  #安装要用的包，第一个用于分析，第二个用于可视化
+install.packages("psych")
+library("FactoMineR")
+library(ggplot2)
+library("factoextra")  
+library("corrplot")
+library(psych)
+#加载要用的包
+
+library(openxlsx)
+data1 <- read.xlsx("D:\\罗一夫毕业设计\\数据\\ceshi2.xlsx", rowNames = TRUE, rows = 1:15, cols = 1:5)
+
+describe(new_data)
+
+
+###碎石头、特征值大于1准则和100次模拟的平行分析（虚线）都表明
+#保留5个主成分即可保留数据集的大部分信息，黑色横线为特征值等于1的分界线
+fa.parallel(new_data, fa = "pc", n.iter = 100, show.legend = TRUE,main="碎石图")
+fa.parallel(new_data,fa="",n.iter=100,
+            show.legend=TRUE,main="Screen plot with parallel analysis")
+
+?fa.parallel
+
+
+#主成分分析
+res.pca <- PCA(new_data, scale.unit = TRUE, ncp = 4, graph = FALSE)
+res.pca1 <- principal(new_data,  nfactors = 6,scores = TRUE)
+res.pca1$weights
+lyf  <- res.pca1$scores
+
+##以下为对结果可视化的方法
+
+
+## 从第一主成分开始依次降低，我们通过观察特征值来决定我们需要考虑保留几个成分。
+##前6个已能够表示方差百分之78以上的波动
+fviz_eig(res.pca)  #每个主成分所占比重
+
+fviz_pca_ind(res.pca)
+fviz_pca_biplot(res.pca)   #点为股票代码，他们之间的距离表示相似程度，箭头为指标间的相关性 
+
+
+
+
+get_eigenvalue(res.pca)       ###衡量每个主成分对方差的解释程度，eigenvalue>1表示
+#该主成分不仅解释了一个原始变量
+
+##变量在PCA结果里面的质量（quality）称为cos2 (square cosine, squared coordinates) 
+var <- get_pca_var(res.pca)
+corrplot(var$cos2, is.corr=FALSE)
+
+fviz_pca_var(res.pca, select.var = list(cos2 = 0.3), repel=T, col.var = "cos2", geom.var = c("arrow", "text") )
+#每个指标对主成分的贡献
+#显示出对方差贡献大于0.6的财务指标
+
+
+
+#综上，选取财务指标:资产报酬率，经营杠杆，应收账款周转天数，流动比率，息税前营业利润率，营业总成本增长率
+#
+#接下来删除列。保留以上6个财务指标    速动比率，长期资本负债率，营业总成本增长率，应收账款周转天数，总资产利润率，
+norsample <-
+  new_data <- new_data[,-5]
+
+
+
+##
+#
+#
+###
+#
+#
+##
+#
+#
+#BP神经网络
+# 安装并导入neuralnet包（还需要安装grid和MASS两个依赖包）
+install.packages('neuralnet')
+install.packages('grid')
+install.packages('MASS')
+install.packages('dfexplore')
+library("neuralnet")
+library("grid")
+library("MASS")
+library("dfexplore")
+
+
+ #验证数据类型是否都为数值型
+  library(dfexplore)
+ dfexplore::dfplot(new_data1)
+ 
+
+
+
+# BP
+#1.1读入做好数据插补的数据
+ 
+
+
+ceshi <- new_data1
+
+
+
+  
+  
+#数据归一化处理，首先看是否有缺失值
+   apply(ceshi,2,function(x) sum(is.na(x)))
+   
+#归一化
+ #法1  normalize<-function(x){(x-min(x)/(max(x)-min(x)))}
+    scaled<-as.data.frame(lapply(ceshi, normalize))
+    
+#法2     maxs<-apply(ceshi,2,max)
+     mins<-apply(ceshi,2,min)
+     scaled<-as.data.frame(scale(ceshi,center = mins,scale=maxs-mins))
+  
+#设置训练数据集 和 测试数据集
+      train_<-scaled[1:50,]  #训练组 
+      test_<-scaled[51:60,]  #测试组
+     
+      
+#引入神经网络包
+       install.packages("neuralnet")
+       library(neuralnet)
+     
+##利用神经网络处理训练数据  
+         
+       
+        model <- neuralnet(类型 ~ 流动比率+营业总成本增长率+经营杠杆+应收账款周转天数+资产报酬率+息税前营业利润率,
+                           data=train_,hidden=c(5,3),linear.output = FALSE)
+        plot(model)
+        
+
+#4.评估模型的性能
+        #上一步的网络图给了我们一个直观的表象，但是并没有给我们提供较多关于这个模型与我们的数据匹配程度的信息。我们将使用compute()函数来在测试数据集上进行预测计算。
+        test_ <- test_[,-6]
+        test_1 <- test_
+        #调整测试数据的列
+        
+        scaled1 <- scaled #备份数据
+        
+        require(dplyr)       #将预测与实际情况对比
+        pred <- neuralnet::compute(model, dplyr::select(scaled, -1))
+        result <- pred$net.result
+        
+        predicted <- ifelse(result > 0.80, "正常", "危机")
+        
+       
+        table(ceshi$类型, predicted, dnn = c("真实值", "预测值"))  #查看预测的和世纪情况是否相符
+        
+           #可以看到只有一个公司预测错了
